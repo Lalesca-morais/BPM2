@@ -1,36 +1,37 @@
 package EX1;
 
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.StringTokenizer;
+import java.util.stream.Collectors;
 
 public class ParImpar {
-    public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        System.out.println("Digite o número de valores a serem inseridos:");
-        int N = scanner.nextInt();
+        System.out.println("Digite o número de valores:");
+        int linhas = Integer.parseInt(br.readLine());
 
-        List<Integer> pares = new ArrayList<>();
-        List<Integer> impares = new ArrayList<>();
+        List<Integer> listaNumeros = new ArrayList<>();
 
         System.out.println("Digite os valores:");
-        for (int i = 0; i < N; i++) {
-            int valor = scanner.nextInt();
-            if (valor % 2 == 0) {
-                pares.add(valor);
-            } else {
-                impares.add(valor);
-            }
+        for (int i = 0; i < linhas; i++) {
+            int valor = Integer.parseInt(br.readLine());
+            listaNumeros.add(valor);
         }
-        Collections.sort(pares);
-        Collections.sort(impares, Comparator.reverseOrder());
+        var pares = listaNumeros.stream().filter(l -> l % 2 == 0).sorted().collect(Collectors.toList());
+        var impares = listaNumeros.stream().filter(l -> l % 2 != 0).sorted(Comparator.reverseOrder()).collect(Collectors.toList());
 
+        List<Integer> total = new ArrayList<>();
+        total.addAll(pares);
+        total.addAll(impares);
         System.out.println("Valores ordenados:");
-        for (int par : pares) {
-            System.out.println("Números pares em ordem crescente: " + par);
-        }
-        for (int impar : impares) {
-            System.out.println("Números ímpares em ordem decrescente: " + impar);
-        }
+        total.forEach(System.out::println);
     }
 }
+
 
